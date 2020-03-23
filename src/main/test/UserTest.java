@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 import static org.hamcrest.MatcherAssert.assertThat;
 
 class UserTest {
@@ -18,7 +19,7 @@ class UserTest {
     void add() {
         Bag<User> hashBag = new HashBag<>();
         User user = new User("Igor", 32);
-        hashBag.add(user);
+        System.out.println(hashBag.add(user));
         assertThat(hashBag, hasItem(user));
     }
 
@@ -39,7 +40,7 @@ class UserTest {
         Bag<User> usersBag = new HashBag<>();
         User user = new User("Andrei", 35);
         usersBag.add(user);
-        usersBag.remove(user);
+        System.out.println(usersBag.remove(user));
         assertThat(usersBag, empty());
     }
 
@@ -67,6 +68,7 @@ class UserTest {
     void contains() {
         HashBag<User> userHashBag = new HashBag<>();
         User user = new User("Egor", 23);
+        userHashBag.add(user);
         assertThat(userHashBag.contains(user), is(false));
     }
 
@@ -83,9 +85,9 @@ class UserTest {
         User user = new User("Volodya", 33);
         HashBag<User> hashBag = new HashBag<>();
         hashBag.add(user);
-        List<User> users = new ArrayList<>();
-        users.addAll(hashBag);
-        Object[] lists = users.toArray();
+        List<User> listUsers = new ArrayList<>();
+        listUsers.addAll(hashBag);
+        Object[] lists = listUsers.toArray();
         assertThat(lists, hasItemInArray(user));
     }
 
@@ -98,11 +100,10 @@ class UserTest {
         List<User> list = new ArrayList<>();
         hashBag.add(user1);
         hashBag.add(user3);
-        list.add(user3);
-        list.add(user1);
         list.add(user2);
-        list.retainAll(hashBag);
-        assertThat(list, is(not(hasItem(user2))));
+        hashBag.retainAll(list);
+        System.out.println(hashBag);
+        assertThat(hashBag, hasItem(user1));
 
     }
 
@@ -144,7 +145,6 @@ class UserTest {
         Bag<User> hashBag = new HashBag<>();
         hashBag.add(user);
         Iterator<User> iterator = hashBag.iterator();
-        iterator.hasNext();
-        assertThat(hashBag, is(not(empty())));
+        assertThat(iterator.hasNext(), is(true));
     }
 }
